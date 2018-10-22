@@ -1,4 +1,22 @@
-# Redux Tree View Example
+# Redux Tree View Select
+
+This project is taken from [Redux Tree View Example](https://github.com/reduxjs/redux/tree/master/examples/tree-view).
+
+Tree view select:
+  - collapse and open each branch (I've already done this!!)
+  - select any node (parent or child)
+    - select parent, selects all children
+    - unselect children sets parent into partial select
+    - unselect all children unselects parent
+    - unselect parent unselects all children
+  - create look and feel similar (but with these extra features) as [Checkable tree](http://jonmiles.github.io/bootstrap-treeview/)
+    - BS4 
+    - fontawesome 4.7
+    - done as presentational component (the actual component should not have any styling dependencies)
+
+Note:
+  - 2 spaces (not tabs)
+  - commit and push at least once an hour 
 
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app), which provides a simple way to start React projects with no build configuration needed.
 

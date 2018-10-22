@@ -1,6 +1,6 @@
 import {
   COLLAPSE,
-  INCREMENT,
+  SELECT,
   ADD_CHILD,
   REMOVE_CHILD,
   CREATE_NODE,
@@ -23,18 +23,19 @@ const node = (state, action) => {
     case CREATE_NODE:
       return {
         id: action.nodeId,
-        counter: 0,
+        title: `Node_${action.nodeId}`,
         childIds: []
-      };
-    case INCREMENT:
-      return {
-        ...state,
-        counter: state.counter + 1
       };
     case COLLAPSE:
       return {
         ...state,
         isCollapsed: !state.isCollapsed
+      };
+    case SELECT:
+      return {
+        ...state,
+        isSelected: !state.isSelected,
+        childIds: childIds(state.childIds, action)
       };
     case ADD_CHILD:
     case REMOVE_CHILD:
@@ -59,6 +60,26 @@ const deleteMany = (state, ids) => {
   return state;
 };
 
+const selectMany = (state, ids, isSelected) => {
+  state = { ...state };
+  state = JSON.parse(JSON.stringify(state));
+  ids.forEach(id => state[id].isSelected = isSelected);
+  return state;
+};
+
+const getAllSelectedParentIds = (state, nodeId) =>
+  state[nodeId].childIds.reduce(
+    (acc, childId) => {
+      console.log(acc, childId)
+      if (state[childId].isSelected) {
+        return [...acc, nodeId, ...getAllSelectedParentIds(state, childId)]
+      } else {
+        return [...acc, ...getAllSelectedParentIds(state, childId)]
+      }
+    },
+    []
+  );
+
 export default (state = {}, action) => {
   const { nodeId } = action;
   if (typeof nodeId === "undefined") {
@@ -68,6 +89,11 @@ export default (state = {}, action) => {
   if (action.type === DELETE_NODE) {
     const descendantIds = getAllDescendantIds(state, nodeId);
     return deleteMany(state, [nodeId, ...descendantIds]);
+  }
+
+  if (action.type === SELECT) {
+    const descendantIds = getAllDescendantIds(state, nodeId);
+    return selectMany(state, [nodeId, ...descendantIds], !state[nodeId].isSelected);
   }
 
   return {

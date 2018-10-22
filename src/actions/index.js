@@ -4,6 +4,7 @@ export const DELETE_NODE = "DELETE_NODE";
 export const ADD_CHILD = "ADD_CHILD";
 export const REMOVE_CHILD = "REMOVE_CHILD";
 export const COLLAPSE = "COLLAPSE";
+export const SELECT = "SELECT";
 
 export const increment = nodeId => ({
   type: INCREMENT,
@@ -12,6 +13,11 @@ export const increment = nodeId => ({
 
 export const collapse = nodeId => ({
   type: COLLAPSE,
+  nodeId
+});
+
+export const select = nodeId => ({
+  type: SELECT,
   nodeId
 });
 

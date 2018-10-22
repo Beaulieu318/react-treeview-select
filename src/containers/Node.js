@@ -10,8 +10,13 @@ export class Node extends Component {
   };
 
   handleCollapseClick = () => {
-    const { collapse, isCollapsed, id } = this.props;
+    const { collapse, id } = this.props;
     collapse(id);
+  };
+
+  handleSelectClick = () => {
+    const { select, id } = this.props;
+    select(id);
   };
 
   handleAddChildClick = e => {
@@ -20,14 +25,6 @@ export class Node extends Component {
     const { addChild, createNode, id } = this.props;
     const childId = createNode().nodeId;
     addChild(id, childId);
-  };
-
-  handleRemoveClick = e => {
-    e.preventDefault();
-
-    const { removeChild, deleteNode, parentId, id } = this.props;
-    removeChild(parentId, id);
-    deleteNode(id);
   };
 
   renderChild = childId => {
@@ -40,29 +37,42 @@ export class Node extends Component {
   };
 
   render() {
-    const { counter, isCollapsed, parentId, childIds } = this.props;
+    const { title, isCollapsed = false, isSelected = false, parentId, childIds } = this.props;
     return (
       <div>
-        Counter: {counter} <button onClick={this.handleCollapseClick}>+</button>{" "}
-        {typeof parentId !== "undefined" && (
-          <a
-            href="#"
-            onClick={this.handleRemoveClick} // eslint-disable-line jsx-a11y/anchor-is-valid
-            style={{ color: "lightgray", textDecoration: "none" }}
-          >
-            ×
-          </a>
-        )}
-        <ul>
-          {isCollapsed && childIds.map(this.renderChild)}
-          <li key="add">
-            <a
-              href="#" // eslint-disable-line jsx-a11y/anchor-is-valid
-              onClick={this.handleAddChildClick}
+        {title} 
+        { 
+          (childIds.length > 0) ? 
+          (
+            <button onClick={this.handleCollapseClick}>{  (isCollapsed ? '+' : '-') }</button>
+          ) :
+          null
+        }
+        {" "}
+        {
+          typeof parentId !== "undefined" && (
+            <button
+              onClick={this.handleSelectClick} 
+              style={{ color: "lightgray", textDecoration: "none" }}
             >
-              Add child
-            </a>
-          </li>
+              { isSelected ? '/' : 'x'}
+            </button>
+          )
+        }
+        <ul>
+          {!isCollapsed && childIds.map(this.renderChild)}
+          {
+            (1 === 0) &&
+            (
+              <li key="add">
+                <button
+                  onClick={this.handleAddChildClick}
+                >
+                  Add child
+                </button>
+              </li>
+            )
+          }
         </ul>
       </div>
     );
