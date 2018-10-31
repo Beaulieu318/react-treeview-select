@@ -63,22 +63,19 @@ const deleteMany = (state, ids) => {
 const selectMany = (state, ids, isSelected) => {
   state = { ...state };
   state = JSON.parse(JSON.stringify(state));
-  ids.forEach(id => state[id].isSelected = isSelected);
+  ids.forEach(id => (state[id].isSelected = isSelected));
   return state;
 };
 
 const getAllSelectedParentIds = (state, nodeId) =>
-  state[nodeId].childIds.reduce(
-    (acc, childId) => {
-      console.log(acc, childId)
-      if (state[childId].isSelected) {
-        return [...acc, nodeId, ...getAllSelectedParentIds(state, childId)]
-      } else {
-        return [...acc, ...getAllSelectedParentIds(state, childId)]
-      }
-    },
-    []
-  );
+  state[nodeId].childIds.reduce((acc, childId) => {
+    console.log(acc, childId);
+    if (state[childId].isSelected) {
+      return [...acc, nodeId, ...getAllSelectedParentIds(state, childId)];
+    } else {
+      return [...acc, ...getAllSelectedParentIds(state, childId)];
+    }
+  }, []);
 
 export default (state = {}, action) => {
   const { nodeId } = action;
@@ -93,7 +90,11 @@ export default (state = {}, action) => {
 
   if (action.type === SELECT) {
     const descendantIds = getAllDescendantIds(state, nodeId);
-    return selectMany(state, [nodeId, ...descendantIds], !state[nodeId].isSelected);
+    return selectMany(
+      state,
+      [nodeId, ...descendantIds],
+      !state[nodeId].isSelected
+    );
   }
 
   return {
