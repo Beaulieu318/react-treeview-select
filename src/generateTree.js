@@ -59,7 +59,7 @@ export function transformJSONToTree(data, headings) {
       childIds: [ ],
       title: 'All',
       isCollapsed: false,
-      isSelected: true,
+      isSelected: 1,
     }
   };
 
@@ -72,7 +72,7 @@ export function transformJSONToTree(data, headings) {
       childIds: [ ],
       title: data[itemInt].title,
       isCollapsed: false,
-      isSelected: true
+      isSelected: 1
     }
 
     let lastHeadingId = '';
@@ -87,7 +87,7 @@ export function transformJSONToTree(data, headings) {
           childIds: [ ],
           title: data[itemInt][headings[headingInt]],
           isCollapsed: false,
-          isSelected: true,
+          isSelected: 1,
         }
 
         if (headingInt === 0) {

@@ -14,9 +14,9 @@ export class Node extends Component {
     collapse(id);
   };
 
-  handleSelectClick = () => {
+  handleSelectClick = (parentId) => {
     const { select, id } = this.props;
-    select(id);
+    select(id, parentId);
   };
 
   handleAddChildClick = e => {
@@ -52,10 +52,12 @@ export class Node extends Component {
         {
           typeof parentId !== "undefined" && (
             <button
-              onClick={this.handleSelectClick} 
-              style={{ color: "lightgray", textDecoration: "none" }}
+              onClick={()=> {this.handleSelectClick(parentId)}} 
+              style={{ color: "black", textDecoration: "none" }}
             >
-              { isSelected ? '/' : 'x'}
+              { isSelected === 1 ? '/' : ''}
+              { isSelected === 0 ? 'x' : ''}
+              { isSelected === 2 ? 'o' : ''}
             </button>
           )
         }
