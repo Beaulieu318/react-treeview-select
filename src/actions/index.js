@@ -16,9 +16,10 @@ export const collapse = nodeId => ({
   nodeId
 });
 
-export const select = nodeId => ({
+export const select = (nodeId, parentId) => ({
   type: SELECT,
-  nodeId
+  nodeId,
+  parentId
 });
 
 let nextId = 0;
