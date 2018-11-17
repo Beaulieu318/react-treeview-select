@@ -8,7 +8,7 @@ import { transformJSONToTree, dataJSON } from "./generateTree";
 import Node from "./containers/Node";
 
 // const tree = generateTree()
-const tree = transformJSONToTree(dataJSON, ["year", "farm"]);
+const tree = transformJSONToTree(dataJSON, ["year", "farm", "crop"]);
 const store = createStore(
   reducer,
   tree,
