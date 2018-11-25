@@ -2,19 +2,7 @@
 
 This project is taken from [Redux Tree View Example](https://github.com/reduxjs/redux/tree/master/examples/tree-view) and can be seen in this [sandbox](https://codesandbox.io/s/github/reactjs/redux/tree/master/examples/tree-view).
 
-Tree view select:
-  - collapse and open each branch (This is done)
-  - create look and feel similar (but with these extra features) as [Checkable tree](http://jonmiles.github.io/bootstrap-treeview/)
-    - BS4 (reactstrap)
-    - fontawesome 4.7
-    - done as example components (the actual component should not have any styling dependencies)
-  - select any node (parent or child)
-    - select parent, selects all children (This is done)
-    - unselect parent, unselects all children (This is done)
-    - unselect children, sets parent into partial select (shown by a box instead of a tick)
-    - unselect all children, unselects parents
-
-The codesandbox of this project can be found [here](https://codesandbox.io/s/github/beaulieu318/react-treeview-select/).
+The codesandbox of this project can be found [here](https://codesandbox.io/s/github/tomduval/react-treeview-select/).
 
 Note:
   - 2 spaces (not tabs)
