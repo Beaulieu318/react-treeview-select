@@ -1,37 +1,37 @@
-import React from 'react'
-import { Component } from 'react'
-import { connect } from 'react-redux'
-import * as actions from '../actions'
+import React, { Component } from 'react'
+import * as actions from './actions'
+import { contextWrapper } from './TreeProvider'
 
-export class Node extends Component {
+class NodeBase extends Component {
   handleIncrementClick = () => {
-    const { increment, id } = this.props
-    increment(id)
+    const { dispatch, increment, id } = this.props
+    dispatch(increment(id))
   }
 
   handleCollapseClick = () => {
-    const { collapse, id } = this.props
-    collapse(id)
+    const { dispatch, collapse, id } = this.props
+    dispatch(collapse(id))
   }
 
   handleSelectClick = parentId => {
-    const { select, id } = this.props
-    select(id, parentId)
+    const { dispatch, select, id } = this.props
+    dispatch(select(id, parentId))
   }
 
   handleAddChildClick = e => {
     e.preventDefault()
 
-    const { addChild, createNode, id } = this.props
-    const childId = createNode().nodeId
-    addChild(id, childId)
+    const { dispatch, addChild, createNode, id } = this.props
+    const childId = dispatch(createNode()).nodeId
+
+    dispatch(addChild(id, childId))
   }
 
   renderChild = childId => {
     const { id } = this.props
     return (
       <li key={childId}>
-        <ConnectedNode id={childId} parentId={id} />
+        <Node id={childId} parentId={id} />
       </li>
     )
   }
@@ -44,6 +44,7 @@ export class Node extends Component {
       parentId,
       childIds,
     } = this.props
+
     return (
       <div>
         {title}
@@ -77,12 +78,8 @@ export class Node extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
   return state[ownProps.id]
 }
 
-const ConnectedNode = connect(
-  mapStateToProps,
-  actions
-)(Node)
-export default ConnectedNode
+export const Node = contextWrapper(NodeBase, mapStateToProps, actions)
