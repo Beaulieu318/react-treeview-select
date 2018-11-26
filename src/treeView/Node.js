@@ -4,27 +4,35 @@ import { contextWrapper } from './TreeProvider'
 
 class NodeBase extends Component {
   handleIncrementClick = () => {
-    const { dispatch, increment, id } = this.props
-    dispatch(increment(id))
+    const { increment, id } = this.props
+    increment(id)
   }
 
   handleCollapseClick = () => {
-    const { dispatch, collapse, id } = this.props
-    dispatch(collapse(id))
+    const { collapse, id } = this.props
+    collapse(id)
   }
 
   handleSelectClick = parentId => {
-    const { dispatch, select, id } = this.props
-    dispatch(select(id, parentId))
+    const { select, id } = this.props
+    select(id, parentId)
   }
 
   handleAddChildClick = e => {
     e.preventDefault()
 
-    const { dispatch, addChild, createNode, id } = this.props
-    const childId = dispatch(createNode()).nodeId
+    const { addChild, createNode, id } = this.props
+    const childId = createNode().nodeId
+    addChild(id, childId)
+  }
 
-    dispatch(addChild(id, childId))
+  renderChild = childId => {
+    const { id } = this.props
+    return (
+      <li key={childId}>
+        <Node id={childId} parentId={id} />
+      </li>
+    )
   }
 
   renderChild = childId => {

@@ -25,6 +25,7 @@ render(
       <Node id={0} />
       <TreeView {...{ tree }} />
       <TreeView {...{ tree }} />
+      <TreeView {...{ tree }} />
     </div>
   </Provider>,
   document.getElementById('root')

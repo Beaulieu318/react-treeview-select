@@ -20,16 +20,25 @@ export function contextWrapper(WrappedComponent, mapStateToProps, actions) {
   return function Wrapper(props) {
     return (
       <Consumer>
-        {value => (
-          <WrappedComponent
-            {...{
-              ...props,
-              ...value,
-              ...actions,
-              ...mapStateToProps(value, props),
-            }}
-          />
-        )}
+        {value => {
+          const entries = Object.entries(actions)
+          let dispatchedActions = {}
+
+          entries.forEach(([name, fn]) => {
+            dispatchedActions[name] = (...args) => value.dispatch(fn(...args))
+          })
+
+          return (
+            <WrappedComponent
+              {...{
+                ...props,
+                ...value,
+                ...dispatchedActions,
+                ...mapStateToProps(value, props),
+              }}
+            />
+          )
+        }}
       </Consumer>
     )
   }
