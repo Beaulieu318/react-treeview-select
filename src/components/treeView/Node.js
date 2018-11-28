@@ -35,15 +35,6 @@ class NodeBase extends Component {
     )
   }
 
-  renderChild = childId => {
-    const { id } = this.props
-    return (
-      <li key={childId}>
-        <Node id={childId} parentId={id} />
-      </li>
-    )
-  }
-
   render() {
     const {
       title,
