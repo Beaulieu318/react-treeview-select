@@ -1,84 +1,49 @@
-import React, { Component } from 'react'
+import React from 'react'
 import * as actions from './actions'
+import { mapStateToProps } from './mapStateToProps'
 import { contextWrapper } from './TreeProvider'
 
-class NodeBase extends Component {
-  handleIncrementClick = () => {
-    const { increment, id } = this.props
-    increment(id)
-  }
+const NodeBase = props => {
+  const {
+    title,
+    isCollapsed = false,
+    isSelected = false,
+    id,
+    parentId,
+    childIds,
+    collapse,
+    select,
+  } = props
 
-  handleCollapseClick = () => {
-    const { collapse, id } = this.props
-    collapse(id)
-  }
+  return (
+    <div>
+      {title}
 
-  handleSelectClick = parentId => {
-    const { select, id } = this.props
-    select(id, parentId)
-  }
+      {childIds.length > 0 && (
+        <button onClick={() => collapse(id)}>{isCollapsed ? '+' : '-'}</button>
+      )}
 
-  handleAddChildClick = e => {
-    e.preventDefault()
+      {typeof parentId !== 'undefined' && (
+        <button
+          onClick={() => select(id, parentId)}
+          style={{ color: 'black', textDecoration: 'none' }}
+        >
+          {isSelected === 1 && '/'}
+          {isSelected === 0 && 'x'}
+          {isSelected === 2 && 'o'}
+        </button>
+      )}
 
-    const { addChild, createNode, id } = this.props
-    const childId = createNode().nodeId
-    addChild(id, childId)
-  }
-
-  renderChild = childId => {
-    const { id } = this.props
-    return (
-      <li key={childId}>
-        <Node id={childId} parentId={id} />
-      </li>
-    )
-  }
-
-  render() {
-    const {
-      title,
-      isCollapsed = false,
-      isSelected = false,
-      parentId,
-      childIds,
-    } = this.props
-
-    return (
-      <div>
-        {title}
-        {childIds.length > 0 ? (
-          <button onClick={this.handleCollapseClick}>
-            {isCollapsed ? '+' : '-'}
-          </button>
-        ) : null}{' '}
-        {typeof parentId !== 'undefined' && (
-          <button
-            onClick={() => {
-              this.handleSelectClick(parentId)
-            }}
-            style={{ color: 'black', textDecoration: 'none' }}
-          >
-            {isSelected === 1 ? '/' : ''}
-            {isSelected === 0 ? 'x' : ''}
-            {isSelected === 2 ? 'o' : ''}
-          </button>
-        )}
-        <ul>
-          {!isCollapsed && childIds.map(this.renderChild)}
-          {1 === 0 && (
-            <li key="add">
-              <button onClick={this.handleAddChildClick}>Add child</button>
+      <ul>
+        {!isCollapsed &&
+          childIds.map(childId => (
+            <li key={childId}>
+              <Node id={childId} parentId={id} />
             </li>
-          )}
-        </ul>
-      </div>
-    )
-  }
-}
-
-const mapStateToProps = (state, ownProps) => {
-  return state[ownProps.id]
+          ))}
+      </ul>
+    </div>
+  )
 }
 
 export const Node = contextWrapper(NodeBase, mapStateToProps, actions)
