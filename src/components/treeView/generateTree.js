@@ -1,37 +1,4 @@
-export const dataJSON = [
-  {
-    id: 0,
-    title: 'Field 1',
-    farm: 'Farm 1',
-    year: '2018',
-    crop: 'Wheat',
-  },
-  {
-    id: 1,
-    title: 'Field 2',
-    farm: 'Farm 2',
-    year: '2018',
-    crop: 'Barley',
-  },
-  {
-    id: 2,
-    title: 'Field 3',
-    farm: 'Farm 2',
-    year: '2018',
-    crop: 'Wheat',
-  },
-  {
-    id: 3,
-    title: 'Field 4',
-    farm: 'Farm 2',
-    year: '2018',
-    crop: 'Wheat',
-  },
-]
-
-export function transformJSONToTree(data, headings) {
-  // This should transform the fields json into a tree structure
-
+export const generateTree = (data, headings) => {
   let tree = {
     0: {
       id: 0,
@@ -87,30 +54,6 @@ export function transformJSONToTree(data, headings) {
 
       lastHeadingId = headingId
     }
-  }
-
-  return tree
-}
-
-export default function generateTree() {
-  let tree = {
-    0: {
-      id: 0,
-      childIds: [],
-      title: `Node_${0}`,
-      isCollapsed: false,
-    },
-  }
-
-  for (let i = 1; i < 1000; i++) {
-    let parentId = Math.floor(Math.pow(Math.random(), 2) * i)
-    tree[i] = {
-      id: i,
-      childIds: [],
-      title: `Node_${i}`,
-      isCollapsed: false,
-    }
-    tree[parentId].childIds.push(i)
   }
 
   return tree
