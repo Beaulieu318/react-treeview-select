@@ -1,46 +1,48 @@
-export const INCREMENT = "INCREMENT";
-export const CREATE_NODE = "CREATE_NODE";
-export const DELETE_NODE = "DELETE_NODE";
-export const ADD_CHILD = "ADD_CHILD";
-export const REMOVE_CHILD = "REMOVE_CHILD";
-export const COLLAPSE = "COLLAPSE";
-export const SELECT = "SELECT";
+import {
+  INCREMENT,
+  CREATE_NODE,
+  DELETE_NODE,
+  ADD_CHILD,
+  REMOVE_CHILD,
+  COLLAPSE,
+  SELECT,
+} from './actionTypes'
 
 export const increment = nodeId => ({
   type: INCREMENT,
-  nodeId
-});
+  nodeId,
+})
 
 export const collapse = nodeId => ({
   type: COLLAPSE,
-  nodeId
-});
+  nodeId,
+})
 
 export const select = (nodeId, parentId) => ({
   type: SELECT,
   nodeId,
-  parentId
-});
+  parentId,
+})
 
-let nextId = 0;
+let nextId = 0
 export const createNode = () => ({
   type: CREATE_NODE,
-  nodeId: `new_${nextId++}`
-});
+  nodeId: `new_${nextId++}`,
+})
 
 export const deleteNode = nodeId => ({
   type: DELETE_NODE,
-  nodeId
-});
+  nodeId,
+})
 
 export const addChild = (nodeId, childId) => ({
   type: ADD_CHILD,
   nodeId,
-  childId
-});
+  childId,
+})
 
 export const removeChild = (nodeId, childId) => ({
   type: REMOVE_CHILD,
   nodeId,
-  childId
-});
+  childId,
+})
